@@ -20,3 +20,7 @@ Route::get('/', function () {
 Route::get('/counter', function () {
     return view('counter.index');
 });
+
+Route::get('/comments', function () {
+    return view('comments.index');
+});
