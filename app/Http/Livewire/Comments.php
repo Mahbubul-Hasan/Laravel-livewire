@@ -4,19 +4,28 @@ namespace App\Http\Livewire;
 
 use App\Models\Comment;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 class Comments extends Component
 {
+    // use WithFileUploads;
     use WithPagination;
+
     protected $paginationTheme = 'bootstrap';
-    public $author;
-    public $comment;
+    public $author, $comment, $image;
     // public $comments;
 
     protected $rules = [
         'comment' => 'required|min:6'
     ];
+
+    protected $listeners = ['fileUpload' => 'handleFileUpload'];
+
+    public function handleFileUpload($image)
+    {
+        $this->image = $image;
+    }
 
     public function addComment()
     {

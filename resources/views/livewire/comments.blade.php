@@ -1,6 +1,6 @@
 <div class="container mt-5 w-50">
     <h2 class='text-center'>Comments</h2>
-
+    
     <form class='my-3' wire:submit.prevent='addComment'>
         <div>
             @if (session()->has('message'))
@@ -11,6 +11,12 @@
         </div>
         <div class="form-row">
             <div class="col-10">
+                <input type="file" class="form-control-file" id="file-input" wire:change="$emit('fileChoosen')">
+            </div>
+            <div class="col-2 mb-3 px-0">
+                <img src="{{ $image }}" alt="" class="img-fluid">
+            </div>
+            <div class="col-10 mt-2">
                 <textarea class="form-control" placeholder="Enter your comment" wire:model.lazy='comment'></textarea>
                 @error('comment') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
@@ -33,3 +39,18 @@
         {{ $comments->links() }}
     </div>
 </div>
+
+<script>
+    Livewire.on('fileChoosen', () => {
+        let file = document.getElementById("file-input").files[0];
+        let reader = new FileReader();
+        
+        reader.addEventListener("load", function () {
+            Livewire.emit('fileUpload', reader.result)
+        }, false);
+        
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    })
+</script>
