@@ -3,13 +3,15 @@
 namespace App\Http\Livewire;
 
 use App\Models\Comment;
+use Carbon\Carbon;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Intervention\Image\Facades\Image;
+
+use function PHPUnit\Framework\fileExists;
 
 class Comments extends Component
 {
-    // use WithFileUploads;
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
@@ -30,17 +32,41 @@ class Comments extends Component
     public function addComment()
     {
         $this->validate();
+        $image = $this->storeImage();
 
         $commentOBJ = new Comment;
-        $commentOBJ = $commentOBJ->saveNewComment($commentOBJ, $this->comment);
+        $commentOBJ = $commentOBJ->saveNewComment($commentOBJ, $this->comment, $image);
         session()->flash('message', 'Comment successfully created.');
         // $this->comments->prepend($commentOBJ);
+
         $this->comment = null;
+        $this->image = null;
+    }
+
+    public function storeImage()
+    {
+        if (!$this->image) {
+            return null;
+        }
+
+        $image = Image::make($this->image)->encode('jpg');
+
+        $file_directory = 'asset/img/';
+        $file_name = Carbon::now()->format('Ymd_Hms') . '.jpg';
+
+        $image->save($file_directory . $file_name);
+
+        return $file_directory . $file_name;
     }
 
     public function delete($id)
     {
-        Comment::find($id)->delete();
+        $commentOBJ = Comment::find($id);
+
+        if (fileExists($commentOBJ->image)) {
+            unlink($commentOBJ->image);
+        }
+        $commentOBJ->delete();
         session()->flash('message', 'Comment successfully deleted.');
         // $this->comments = $this->comments->except($id);
     }

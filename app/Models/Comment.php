@@ -14,10 +14,11 @@ class Comment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function saveNewComment($commentOBJ, $comment)
+    public function saveNewComment($commentOBJ, $comment, $image)
     {
         $commentOBJ->comment = $comment;
         $commentOBJ->user_id = 1;
+        $commentOBJ->image = $image;
 
         $commentOBJ->save();
 

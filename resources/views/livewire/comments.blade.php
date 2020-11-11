@@ -1,6 +1,6 @@
 <div class="container mt-5 w-50">
     <h2 class='text-center'>Comments</h2>
-    
+
     <form class='my-3' wire:submit.prevent='addComment'>
         <div>
             @if (session()->has('message'))
@@ -31,6 +31,7 @@
                 <span class=''>{{ $comment->created_at->diffForHumans() }}</span>
                 <i class="fas fa-times text-danger" role="button" wire:click='delete({{ $comment->id }})'></i>
             </div>
+            <img src="{{ $comment->image }}" alt="" class="img-fluid">
             <p class="card-text">{{ $comment->comment }}</p>
         </div>
     </div>
@@ -44,11 +45,11 @@
     Livewire.on('fileChoosen', () => {
         let file = document.getElementById("file-input").files[0];
         let reader = new FileReader();
-        
+
         reader.addEventListener("load", function () {
             Livewire.emit('fileUpload', reader.result)
         }, false);
-        
+
         if (file) {
             reader.readAsDataURL(file);
         }
