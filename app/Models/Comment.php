@@ -14,6 +14,11 @@ class Comment extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function supportTicket()
+    {
+        return $this->belongsTo(SupportTicket::class);
+    }
+
     public function saveNewComment($commentOBJ, $comment, $image)
     {
         $commentOBJ->comment = $comment;
