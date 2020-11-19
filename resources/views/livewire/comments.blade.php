@@ -1,4 +1,4 @@
-<div class="container mt-5 w-50">
+<div>
     <h2 class='text-center'>Comments</h2>
 
     <form class='my-3' wire:submit.prevent='addComment'>
