@@ -19,10 +19,11 @@ class Comment extends Model
         return $this->belongsTo(SupportTicket::class);
     }
 
-    public function saveNewComment($commentOBJ, $comment, $image)
+    public function saveNewComment($commentOBJ, $comment, $ticketId, $image)
     {
         $commentOBJ->comment = $comment;
-        $commentOBJ->user_id = 1;
+        $commentOBJ->user_id = User::all()->random()->id;
+        $commentOBJ->support_ticket_id = $ticketId;
         $commentOBJ->image = $image;
 
         $commentOBJ->save();
