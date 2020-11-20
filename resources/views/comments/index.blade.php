@@ -12,6 +12,29 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a href="{{ route('counter') }}" class="text-sm text-dark">Counter</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('comments') }}" class="ml-4 text-sm text-dark">Comments</a>
+                </li>
+                <li class="nav-item">
+                    <form class='inline-block' method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <x-jet-dropdown-link href="{{ route('logout') }}" class="text-sm text-dark" onclick="event.preventDefault(); this.closest('form').submit();">
+                            {{ __('Logout') }}
+                        </x-jet-dropdown-link>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <section class="container">
         <div class="row mt-5">
             <div class="col-md-6">
