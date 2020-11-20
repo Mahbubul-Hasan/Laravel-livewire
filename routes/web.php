@@ -24,3 +24,7 @@ Route::get('/counter', function () {
 Route::get('/comments', function () {
     return view('comments.index');
 });
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
