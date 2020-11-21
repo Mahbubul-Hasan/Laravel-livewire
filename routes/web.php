@@ -20,6 +20,3 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/counter', [HomeController::class, 'counter'])->name('counter');
     Route::get('/comments', [HomeController::class, 'comments'])->name('comments');
 });
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
